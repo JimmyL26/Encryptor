@@ -118,6 +118,50 @@ public class Encryptor
   public String decryptMessage(String encryptedMessage)
   {
     /* to be implemented in part (d) */
+    String decrypt = "";
+    for (int i = 0; i < encryptedMessage.length(); i += numRows * numCols)
+    {
+      fillBlock2(encryptedMessage.substring(i));
+      decrypt += decryptBlock();
+    }
+    boolean keepGoing = true;
+    while (keepGoing)
+    {
+      if (decrypt.substring(decrypt.length() - 1).equals("A"))
+      {
+        decrypt = decrypt.substring(0, decrypt.length() - 1);
+      }
+      else
+      {
+        keepGoing = false;
+      }
+    }
+    return decrypt;
+  }
 
+  public void fillBlock2(String str)
+  {
+    int count = 0;
+    for (int i = 0; i < letterBlock[0].length; i++)
+    {
+      for (int j = 0; j < letterBlock.length; j++)
+      {
+        letterBlock[j][i] = str.substring(count, count + 1);
+        count++;
+      }
+    }
+  }
+
+  public String decryptBlock()
+  {
+    String decryptedString = "";
+    for (int i = 0; i < letterBlock.length; i++)
+    {
+      for (int j = 0; j < letterBlock[0].length; j++)
+      {
+        decryptedString += letterBlock[i][j];
+      }
+    }
+    return decryptedString;
   }
 }
